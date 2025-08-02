@@ -1,6 +1,8 @@
 -- vim.g.loaded_netrw = 0
 -- vim.g.loaded_netrwPlugin = 0
 -- vim.cmd("let g:netrw_liststyle = 3")
+vim.opt.shell = "C:\\Program Files\\Git\\bin\\bash.exe"
+
 vim.cmd("let g:netrw_banner = 0 ")
 	
 vim.opt.guicursor = ""

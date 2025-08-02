@@ -6,6 +6,9 @@ vim.g.maplocalleader = " "
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "moves lines down in visual selection" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "moves lines up in visual selection" })
 
+--run java using rj
+vim.keymap.set("n", "<leader>rj", "<cmd>RunJava<CR>", { desc = "Compile & Run Java", noremap = true, silent = true })
+
 vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "move down in buffer with cursor centered" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "move up in buffer with cursor centered" })
@@ -40,6 +43,20 @@ vim.keymap.set("n", "x", '"_x', opts)
 -- Replace the word cursor is on globally
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
     { desc = "Replace word cursor is on globally" })
+
+vim.keymap.set("n", "<F6>", function()
+  local filename = vim.fn.expand("%:p") -- full path
+  local output = vim.fn.expand("%:p:r") -- full path without extension
+  local cmd = string.format([[gcc "%s" -o "%s.exe" && "%s.exe"]], filename, output, output)
+
+  require("toggleterm.terminal").Terminal
+    :new({
+      cmd = cmd,
+      direction = "float",
+      close_on_exit = false,
+    })
+    :toggle()
+end, { desc = "Compile and run C file (Windows Git Bash)" })
 
 -- Executes shell command from in here making file executable
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true, desc = "makes file executable" })
