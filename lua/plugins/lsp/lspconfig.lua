@@ -178,7 +178,13 @@ return {
             },
         })
 
-
+        -- C/C++ via clangd
+        lspconfig.clangd.setup({
+            capabilities = capabilities,
+            cmd = { "clangd" },
+            filetypes = { "c", "cpp", "objc", "objcpp" },
+            root_dir = lspconfig.util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
+        })
 
 
         -- HACK: If using Blink.cmp Configure all LSPs here

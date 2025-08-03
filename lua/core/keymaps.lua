@@ -9,6 +9,21 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "moves lines up in visual 
 --run java using rj
 vim.keymap.set("n", "<leader>rj", "<cmd>RunJava<CR>", { desc = "Compile & Run Java", noremap = true, silent = true })
 
+--run c using rc
+vim.api.nvim_create_user_command("RunC", function()
+  local filename = vim.fn.expand("%:t:r")        -- e.g. main
+  local filepath = vim.fn.expand("%:p")          -- full absolute path
+  local output = filename .. ".exe"
+
+  -- Save before running
+  vim.cmd("w")
+
+  -- Git Bash-compatible terminal command
+  vim.cmd("split | terminal gcc \"" .. filepath .. "\" -o \"" .. output .. "\" && ./\"" .. output .. "\"")
+end, {})
+
+vim.keymap.set("n", "<leader>rc", "<cmd>RunC<cr>", { desc = "Compile and run C file" })
+
 vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "move down in buffer with cursor centered" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "move up in buffer with cursor centered" })
